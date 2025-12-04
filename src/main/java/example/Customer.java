@@ -1,58 +1,101 @@
 package example;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static example.Movie.MovieType.NEW_RELEASE;
-
-@SuppressWarnings("StringConcatenationInLoop")
-class Customer {
+/**
+ * Represents a customer with rentals and statement generation.
+ */
+public class Customer {
     private final String name;
     private final List<Rental> rentals;
 
     public Customer(String name, List<Rental> rentals) {
         this.name = name;
-        this.rentals = rentals;
+        this.rentals = new ArrayList<>(rentals);
     }
-
 
     public String getName() {
         return name;
     }
 
-    public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-        String result = "Rental Record for " + getName() + "\n";
-        for (Rental each : rentals) {
-            double thisAmount = 0;
-            //determine amounts for each line
-            switch (each.getMovie().getPriceCode()) {
-                case REGULAR -> {
-                    thisAmount += 2;
-                    if (each.getDaysRented() > 2)
-                        thisAmount += (each.getDaysRented() - 2) * 1.5;
-                }
-                case NEW_RELEASE -> thisAmount += each.getDaysRented() * 3;
-                case CHILDRENS -> {
-                    thisAmount += 1.5;
-                    if (each.getDaysRented() > 3)
-                        thisAmount += (each.getDaysRented() - 3) * 1.5;
-                }
-            }
-            // add frequent renter points
-            frequentRenterPoints ++;
-            // add bonus for a two day new release rental
-            if ((each.getMovie().getPriceCode() == NEW_RELEASE) && each.getDaysRented() > 1)
-                frequentRenterPoints ++;
-            //show figures for this rental
-            result += "\t" + each.getMovie().getTitle()+ "\t" + thisAmount + "\n";
-            totalAmount += thisAmount;
-        }
-        //add footer lines
-        result += "Amount owed is " + totalAmount + "\n";
-        result += "You earned " + frequentRenterPoints + " frequent renter points";
-        return result;
+    public List<Rental> getRentals() {
+        return Collections.unmodifiableList(rentals);
     }
 
+    public void addRental(Rental rental) {
+        rentals.add(rental);
+    }
 
+    public String statement() {
+        return statement(StatementFormat.PLAIN_TEXT);
+    }
+
+    public String statement(StatementFormat format) {
+        return switch (format) {
+            case PLAIN_TEXT -> generatePlainTextStatement();
+            case HTML -> generateHtmlStatement();
+        };
+    }
+
+    private String generatePlainTextStatement() {
+        StringBuilder result = new StringBuilder();
+        result.append("Rental Record for ").append(getName()).append("\n");
+
+        for (Rental rental : rentals) {
+            result.append("\t")
+                  .append(rental.getMovie().getTitle())
+                  .append("\t")
+                  .append(rental.calculatePrice())
+                  .append("\n");
+        }
+
+        result.append("Amount owed is ").append(getTotalAmount()).append("\n");
+        result.append("You earned ").append(getTotalFrequentRenterPoints()).append(" frequent renter points");
+
+        return result.toString();
+    }
+
+    private String generateHtmlStatement() {
+        StringBuilder result = new StringBuilder();
+        result.append("<html>\n");
+        result.append("<head><title>Rental Statement</title></head>\n");
+        result.append("<body>\n");
+        result.append("<h1>Rental Record for ").append(getName()).append("</h1>\n");
+        result.append("<table>\n");
+        result.append("<tr><th>Title</th><th>Price</th></tr>\n");
+
+        for (Rental rental : rentals) {
+            result.append("<tr><td>")
+                  .append(rental.getMovie().getTitle())
+                  .append("</td><td>")
+                  .append(rental.calculatePrice())
+                  .append("</td></tr>\n");
+        }
+
+        result.append("</table>\n");
+        result.append("<p>Amount owed is <strong>").append(getTotalAmount()).append("</strong></p>\n");
+        result.append("<p>You earned <strong>").append(getTotalFrequentRenterPoints()).append("</strong> frequent renter points</p>\n");
+        result.append("</body>\n");
+        result.append("</html>");
+
+        return result.toString();
+    }
+
+    public double getTotalAmount() {
+        double total = 0;
+        for (Rental rental : rentals) {
+            total += rental.calculatePrice();
+        }
+        return total;
+    }
+
+    public int getTotalFrequentRenterPoints() {
+        int points = 0;
+        for (Rental rental : rentals) {
+            points += rental.calculateFrequentRenterPoints();
+        }
+        return points;
+    }
 }

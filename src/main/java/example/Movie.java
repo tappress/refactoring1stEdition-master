@@ -1,23 +1,22 @@
 package example;
 
+/**
+ * Represents a movie with title and genre.
+ */
 public class Movie {
     private final String title;
-    private final MovieType priceCode;
-    public enum MovieType {
-        REGULAR, NEW_RELEASE, CHILDRENS
-    }
+    private final Genre genre;
 
-    public Movie(String title, MovieType priceCode) {
+    public Movie(String title, Genre genre) {
         this.title = title;
-        this.priceCode = priceCode;
+        this.genre = genre;
     }
 
-    public MovieType getPriceCode() {
-        return priceCode;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public String getTitle (){
+    public String getTitle() {
         return title;
     }
-
 }

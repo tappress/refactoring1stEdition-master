@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static example.Movie.MovieType.*;
 import static org.junit.Assert.*;
 
 /**
@@ -30,6 +29,29 @@ public class CustomerTest {
         assertEquals("", customer.getName());
     }
 
+    // ============ Rentals Management Tests ============
+
+    @Test
+    public void shouldReturnRentals() {
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
+        Rental rental = new Rental(movie, 2);
+        Customer customer = new Customer("John", List.of(rental));
+
+        assertEquals(1, customer.getRentals().size());
+        assertSame(rental, customer.getRentals().get(0));
+    }
+
+    @Test
+    public void shouldAddRental() {
+        Customer customer = new Customer("John", new ArrayList<>());
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
+        Rental rental = new Rental(movie, 2);
+
+        customer.addRental(rental);
+
+        assertEquals(1, customer.getRentals().size());
+    }
+
     // ============ Empty Rental Tests ============
 
     @Test
@@ -47,7 +69,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargeBasePriceForRegularMovieRentedForTwoDays() {
-        Movie movie = new Movie("The Matrix", REGULAR);
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
         Rental rental = new Rental(movie, 2);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -59,7 +81,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargeBasePriceForRegularMovieRentedForOneDay() {
-        Movie movie = new Movie("The Matrix", REGULAR);
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
         Rental rental = new Rental(movie, 1);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -71,7 +93,7 @@ public class CustomerTest {
 
     @Test
     public void shouldAddExtraChargeForRegularMovieRentedOverTwoDays() {
-        Movie movie = new Movie("The Matrix", REGULAR);
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
         Rental rental = new Rental(movie, 5);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -84,7 +106,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargeCorrectlyForRegularMovieRentedForThreeDays() {
-        Movie movie = new Movie("The Matrix", REGULAR);
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
         Rental rental = new Rental(movie, 3);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -99,7 +121,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargePerDayForNewReleaseMovie() {
-        Movie movie = new Movie("Avatar 3", NEW_RELEASE);
+        Movie movie = new Movie("Avatar 3", Genres.NEW_RELEASE);
         Rental rental = new Rental(movie, 1);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -112,7 +134,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargeCorrectlyForNewReleaseRentedMultipleDays() {
-        Movie movie = new Movie("Avatar 3", NEW_RELEASE);
+        Movie movie = new Movie("Avatar 3", Genres.NEW_RELEASE);
         Rental rental = new Rental(movie, 5);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -127,7 +149,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargeBasePriceForChildrensMovieRentedForThreeDays() {
-        Movie movie = new Movie("Finding Nemo", CHILDRENS);
+        Movie movie = new Movie("Finding Nemo", Genres.CHILDRENS);
         Rental rental = new Rental(movie, 3);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -140,7 +162,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargeBasePriceForChildrensMovieRentedForOneDay() {
-        Movie movie = new Movie("Finding Nemo", CHILDRENS);
+        Movie movie = new Movie("Finding Nemo", Genres.CHILDRENS);
         Rental rental = new Rental(movie, 1);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -153,7 +175,7 @@ public class CustomerTest {
 
     @Test
     public void shouldAddExtraChargeForChildrensMovieRentedOverThreeDays() {
-        Movie movie = new Movie("Finding Nemo", CHILDRENS);
+        Movie movie = new Movie("Finding Nemo", Genres.CHILDRENS);
         Rental rental = new Rental(movie, 5);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -166,7 +188,7 @@ public class CustomerTest {
 
     @Test
     public void shouldChargeCorrectlyForChildrensMovieRentedForFourDays() {
-        Movie movie = new Movie("Finding Nemo", CHILDRENS);
+        Movie movie = new Movie("Finding Nemo", Genres.CHILDRENS);
         Rental rental = new Rental(movie, 4);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -181,7 +203,7 @@ public class CustomerTest {
 
     @Test
     public void shouldEarnOnePointForRegularMovieRental() {
-        Movie movie = new Movie("The Matrix", REGULAR);
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
         Rental rental = new Rental(movie, 5);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -192,7 +214,7 @@ public class CustomerTest {
 
     @Test
     public void shouldEarnOnePointForChildrensMovieRental() {
-        Movie movie = new Movie("Finding Nemo", CHILDRENS);
+        Movie movie = new Movie("Finding Nemo", Genres.CHILDRENS);
         Rental rental = new Rental(movie, 5);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -203,7 +225,7 @@ public class CustomerTest {
 
     @Test
     public void shouldEarnOnePointForNewReleaseRentedForOneDay() {
-        Movie movie = new Movie("Avatar 3", NEW_RELEASE);
+        Movie movie = new Movie("Avatar 3", Genres.NEW_RELEASE);
         Rental rental = new Rental(movie, 1);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -214,7 +236,7 @@ public class CustomerTest {
 
     @Test
     public void shouldEarnBonusPointForNewReleaseRentedForMoreThanOneDay() {
-        Movie movie = new Movie("Avatar 3", NEW_RELEASE);
+        Movie movie = new Movie("Avatar 3", Genres.NEW_RELEASE);
         Rental rental = new Rental(movie, 2);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -225,7 +247,7 @@ public class CustomerTest {
 
     @Test
     public void shouldEarnBonusPointForNewReleaseRentedForMultipleDays() {
-        Movie movie = new Movie("Avatar 3", NEW_RELEASE);
+        Movie movie = new Movie("Avatar 3", Genres.NEW_RELEASE);
         Rental rental = new Rental(movie, 5);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -238,9 +260,9 @@ public class CustomerTest {
 
     @Test
     public void shouldCalculateTotalForMultipleRentals() {
-        Movie regularMovie = new Movie("The Matrix", REGULAR);
-        Movie newReleaseMovie = new Movie("Avatar 3", NEW_RELEASE);
-        Movie childrensMovie = new Movie("Finding Nemo", CHILDRENS);
+        Movie regularMovie = new Movie("The Matrix", Genres.REGULAR);
+        Movie newReleaseMovie = new Movie("Avatar 3", Genres.NEW_RELEASE);
+        Movie childrensMovie = new Movie("Finding Nemo", Genres.CHILDRENS);
 
         Rental rental1 = new Rental(regularMovie, 3);    // 2 + 1.5 = 3.5
         Rental rental2 = new Rental(newReleaseMovie, 2); // 2 * 3 = 6
@@ -256,9 +278,9 @@ public class CustomerTest {
 
     @Test
     public void shouldCalculatePointsForMultipleRentals() {
-        Movie regularMovie = new Movie("The Matrix", REGULAR);
-        Movie newReleaseMovie = new Movie("Avatar 3", NEW_RELEASE);
-        Movie childrensMovie = new Movie("Finding Nemo", CHILDRENS);
+        Movie regularMovie = new Movie("The Matrix", Genres.REGULAR);
+        Movie newReleaseMovie = new Movie("Avatar 3", Genres.NEW_RELEASE);
+        Movie childrensMovie = new Movie("Finding Nemo", Genres.CHILDRENS);
 
         Rental rental1 = new Rental(regularMovie, 3);    // 1 point
         Rental rental2 = new Rental(newReleaseMovie, 2); // 2 points (bonus for >1 day)
@@ -274,8 +296,8 @@ public class CustomerTest {
 
     @Test
     public void shouldListAllRentalsInStatement() {
-        Movie movie1 = new Movie("The Matrix", REGULAR);
-        Movie movie2 = new Movie("Avatar 3", NEW_RELEASE);
+        Movie movie1 = new Movie("The Matrix", Genres.REGULAR);
+        Movie movie2 = new Movie("Avatar 3", Genres.NEW_RELEASE);
 
         Rental rental1 = new Rental(movie1, 2);
         Rental rental2 = new Rental(movie2, 3);
@@ -301,7 +323,7 @@ public class CustomerTest {
 
     @Test
     public void shouldFormatStatementWithCorrectFooter() {
-        Movie movie = new Movie("Test Movie", REGULAR);
+        Movie movie = new Movie("Test Movie", Genres.REGULAR);
         Rental rental = new Rental(movie, 2);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -313,7 +335,7 @@ public class CustomerTest {
 
     @Test
     public void shouldFormatRentalLineWithTabSeparators() {
-        Movie movie = new Movie("Test Movie", REGULAR);
+        Movie movie = new Movie("Test Movie", Genres.REGULAR);
         Rental rental = new Rental(movie, 2);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -322,11 +344,85 @@ public class CustomerTest {
         assertTrue(statement.contains("\tTest Movie\t2.0\n"));
     }
 
+    // ============ HTML Statement Tests ============
+
+    @Test
+    public void shouldGenerateHtmlStatement() {
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
+        Rental rental = new Rental(movie, 2);
+        Customer customer = new Customer("John", List.of(rental));
+
+        String statement = customer.statement(StatementFormat.HTML);
+
+        assertTrue(statement.contains("<html>"));
+        assertTrue(statement.contains("</html>"));
+        assertTrue(statement.contains("<h1>Rental Record for John</h1>"));
+        assertTrue(statement.contains("<table>"));
+        assertTrue(statement.contains("<td>The Matrix</td>"));
+        assertTrue(statement.contains("<td>2.0</td>"));
+        assertTrue(statement.contains("<strong>2.0</strong>"));
+        assertTrue(statement.contains("<strong>1</strong> frequent renter points"));
+    }
+
+    @Test
+    public void shouldGeneratePlainTextStatementByDefault() {
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
+        Rental rental = new Rental(movie, 2);
+        Customer customer = new Customer("John", List.of(rental));
+
+        String defaultStatement = customer.statement();
+        String plainTextStatement = customer.statement(StatementFormat.PLAIN_TEXT);
+
+        assertEquals(defaultStatement, plainTextStatement);
+    }
+
+    @Test
+    public void shouldGenerateHtmlStatementForMultipleRentals() {
+        Movie regularMovie = new Movie("The Matrix", Genres.REGULAR);
+        Movie newReleaseMovie = new Movie("Avatar 3", Genres.NEW_RELEASE);
+
+        Rental rental1 = new Rental(regularMovie, 2);
+        Rental rental2 = new Rental(newReleaseMovie, 3);
+
+        Customer customer = new Customer("John", List.of(rental1, rental2));
+
+        String statement = customer.statement(StatementFormat.HTML);
+
+        assertTrue(statement.contains("<td>The Matrix</td>"));
+        assertTrue(statement.contains("<td>Avatar 3</td>"));
+        assertTrue(statement.contains("<strong>11.0</strong>")); // 2 + 9 = 11
+        assertTrue(statement.contains("<strong>3</strong> frequent renter points")); // 1 + 2 = 3
+    }
+
+    // ============ Total Amount and Points Tests ============
+
+    @Test
+    public void shouldReturnTotalAmount() {
+        Movie movie = new Movie("The Matrix", Genres.REGULAR);
+        Rental rental = new Rental(movie, 5);
+        Customer customer = new Customer("John", List.of(rental));
+
+        assertEquals(6.5, customer.getTotalAmount(), 0.001);
+    }
+
+    @Test
+    public void shouldReturnTotalFrequentRenterPoints() {
+        Movie regularMovie = new Movie("The Matrix", Genres.REGULAR);
+        Movie newReleaseMovie = new Movie("Avatar 3", Genres.NEW_RELEASE);
+
+        Rental rental1 = new Rental(regularMovie, 3);
+        Rental rental2 = new Rental(newReleaseMovie, 2);
+
+        Customer customer = new Customer("John", List.of(rental1, rental2));
+
+        assertEquals(3, customer.getTotalFrequentRenterPoints());
+    }
+
     // ============ Edge Cases Tests ============
 
     @Test
     public void shouldHandleZeroDayRental() {
-        Movie movie = new Movie("Free Preview", REGULAR);
+        Movie movie = new Movie("Free Preview", Genres.REGULAR);
         Rental rental = new Rental(movie, 0);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -339,7 +435,7 @@ public class CustomerTest {
 
     @Test
     public void shouldHandleZeroDayNewRelease() {
-        Movie movie = new Movie("Free Preview", NEW_RELEASE);
+        Movie movie = new Movie("Free Preview", Genres.NEW_RELEASE);
         Rental rental = new Rental(movie, 0);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -353,7 +449,7 @@ public class CustomerTest {
 
     @Test
     public void shouldHandleZeroDayChildrens() {
-        Movie movie = new Movie("Free Preview", CHILDRENS);
+        Movie movie = new Movie("Free Preview", Genres.CHILDRENS);
         Rental rental = new Rental(movie, 0);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -367,7 +463,7 @@ public class CustomerTest {
     public void shouldHandleLargeNumberOfRentals() {
         List<Rental> rentals = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            Movie movie = new Movie("Movie " + i, REGULAR);
+            Movie movie = new Movie("Movie " + i, Genres.REGULAR);
             rentals.add(new Rental(movie, 1));
         }
         Customer customer = new Customer("John", rentals);
@@ -382,7 +478,7 @@ public class CustomerTest {
 
     @Test
     public void shouldHandleLongRentalPeriod() {
-        Movie movie = new Movie("Long Rental", REGULAR);
+        Movie movie = new Movie("Long Rental", Genres.REGULAR);
         Rental rental = new Rental(movie, 365);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -394,7 +490,7 @@ public class CustomerTest {
 
     @Test
     public void shouldHandleMovieTitleWithSpecialCharacters() {
-        Movie movie = new Movie("Alien: Romulus (2024)", NEW_RELEASE);
+        Movie movie = new Movie("Alien: Romulus (2024)", Genres.NEW_RELEASE);
         Rental rental = new Rental(movie, 2);
         Customer customer = new Customer("John", List.of(rental));
 
@@ -412,13 +508,43 @@ public class CustomerTest {
         assertTrue(statement.contains("Rental Record for O'Brien-Smith"));
     }
 
+    // ============ Custom Genre Tests ============
+
+    @Test
+    public void shouldSupportCustomGenre() {
+        Genre documentary = new Genre() {
+            @Override
+            public String getName() {
+                return "Documentary";
+            }
+
+            @Override
+            public double calculatePrice(int daysRented) {
+                return 1.0 + daysRented * 0.5;
+            }
+
+            @Override
+            public int calculateFrequentRenterPoints(int daysRented) {
+                return daysRented > 5 ? 3 : 1;
+            }
+        };
+
+        Movie movie = new Movie("Planet Earth", documentary);
+        Rental rental = new Rental(movie, 7);
+        Customer customer = new Customer("John", List.of(rental));
+
+        // 1.0 + 7 * 0.5 = 4.5
+        assertEquals(4.5, customer.getTotalAmount(), 0.001);
+        assertEquals(3, customer.getTotalFrequentRenterPoints());
+    }
+
     // ============ Integration Tests ============
 
     @Test
     public void shouldGenerateCompleteStatementForTypicalScenario() {
-        Movie regularMovie = new Movie("The Matrix", REGULAR);
-        Movie newReleaseMovie = new Movie("Avatar 3", NEW_RELEASE);
-        Movie childrensMovie = new Movie("Finding Nemo", CHILDRENS);
+        Movie regularMovie = new Movie("The Matrix", Genres.REGULAR);
+        Movie newReleaseMovie = new Movie("Avatar 3", Genres.NEW_RELEASE);
+        Movie childrensMovie = new Movie("Finding Nemo", Genres.CHILDRENS);
 
         Rental rental1 = new Rental(regularMovie, 3);
         Rental rental2 = new Rental(newReleaseMovie, 2);
@@ -439,9 +565,9 @@ public class CustomerTest {
 
     @Test
     public void shouldMatchExpectedOutputFromMainDemo() {
-        Movie regularMovie = new Movie("Gone with the Wind", REGULAR);
-        Movie newReleaseMovie = new Movie("Avengers Endgame", NEW_RELEASE);
-        Movie childrensMovie = new Movie("Snow White", CHILDRENS);
+        Movie regularMovie = new Movie("Gone with the Wind", Genres.REGULAR);
+        Movie newReleaseMovie = new Movie("Avengers Endgame", Genres.NEW_RELEASE);
+        Movie childrensMovie = new Movie("Snow White", Genres.CHILDRENS);
 
         Rental rental1 = new Rental(regularMovie, 3);
         Rental rental2 = new Rental(newReleaseMovie, 1);

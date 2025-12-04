@@ -1,6 +1,9 @@
 package example;
 
-class Rental {
+/**
+ * Represents a rental transaction with a movie and rental duration.
+ */
+public class Rental {
     private final Movie movie;
     private final int daysRented;
 
@@ -15,5 +18,13 @@ class Rental {
 
     public Movie getMovie() {
         return movie;
+    }
+
+    public double calculatePrice() {
+        return movie.getGenre().calculatePrice(daysRented);
+    }
+
+    public int calculateFrequentRenterPoints() {
+        return movie.getGenre().calculateFrequentRenterPoints(daysRented);
     }
 }
