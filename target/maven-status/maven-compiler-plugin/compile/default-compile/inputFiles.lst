@@ -1,0 +1,17 @@
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/model/Genre.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/dto/StatementRequest.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/model/Genres.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/model/Movie.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/controller/GlobalExceptionHandler.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/model/Rental.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/dto/StatementResponse.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/dto/RentalRequest.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/service/GenreService.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/dto/RentalResponse.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/controller/GenreController.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/service/StatementService.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/model/Customer.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/MovieRentalApplication.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/model/StatementFormat.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/service/RentalService.java
+/home/and/Projects/innovative_qa/refactoring1stEdition-master/src/main/java/example/controller/RentalController.java
